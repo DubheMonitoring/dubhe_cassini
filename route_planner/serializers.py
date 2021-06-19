@@ -11,4 +11,4 @@ class PollutionAreaSerializer(serializers.ModelSerializer):
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Route
-        fields = ('id', 'name', 'risk', 'start', 'end', 'geometry')
+        fields = ('id', 'name', 'risk', 'start_name', 'end_name', 'start_geom', 'end_geom', 'geometry')

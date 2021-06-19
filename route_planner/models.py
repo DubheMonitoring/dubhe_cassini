@@ -35,10 +35,13 @@ class Route(models.Model):
         choices=RiskLevels.choices,
         default=RiskLevels.HIGH
     )
-    start = models.PointField(null=True,
-                              blank=True)
-    end = models.PointField(null=True,
-                              blank=True)
+    start_name = models.CharField(default="Parkeerplaats Duizendmeterweg", max_length=100)
+    end_name= models.CharField(default="De Heuvel", max_length=100)
+
+    start_geom = models.PointField(null=True,
+                                   blank=True)
+    end_geom = models.PointField(null=True,
+                                 blank=True)
     geometry = models.LineStringField(null=True,
                                       blank=True)
 
