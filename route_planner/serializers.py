@@ -1,14 +1,16 @@
-from rest_framework import serializers
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from route_planner.models import PollutionArea, Route
 
 
-class PollutionAreaSerializer(serializers.ModelSerializer):
+class PollutionAreaSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = PollutionArea
-        fields = ('id', 'pollutant_concentration', 'measured_at', 'geometry')
+        geo_field = "geometry"
+        fields = "__all__"
 
 
-class RouteSerializer(serializers.ModelSerializer):
+class RouteSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Route
-        fields = ('id', 'name', 'risk', 'start_name', 'end_name', 'start_geom', 'end_geom', 'geometry')
+        geo_field="geometry"
+        fields = "__all__"

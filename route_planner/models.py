@@ -3,20 +3,29 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
+class PollutionPoint(models.Model):
+    locationid = models.IntegerField(default=0)
+    pollutant_concentration = models.FloatField(default=0.0)
+    measured_at = models.DateTimeField(auto_now=True)
+    geometry = models.PointField(null=True,
+                                   blank=True)
+
+
 class PollutionArea(models.Model):
     class SatName(models.TextChoices):
         TROPOMI = "TR", _('TROPOMI')
         OMI = "OM", _('Omi')
         OTHER = "OT", _("Other")
+        CAMS = "CM", _("CAMS")
 
-    pollutant_concentration = models.FloatField(default=0.0)
-    measured_at = models.DateTimeField(auto_now_add=True)
+    pol_conc = models.FloatField(default=0.0)
+    measure = models.DateTimeField(auto_now_add=True)
     source= models.CharField(
         max_length=2,
         choices=SatName.choices,
         default=SatName.TROPOMI
     )
-    geometry = models.PolygonField(null=True,
+    geometry = models.PointField(null=True,
                                    blank=True)
 
     def __str__(self):
