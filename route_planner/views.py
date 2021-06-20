@@ -1,19 +1,28 @@
+import shapely.wkt
 from rest_framework import generics
-from route_planner.models import PollutionArea, Route
-from route_planner.serializers import RouteSerializer, PollutionAreaSerializer
+import geojson
+from route_planner.models import PollutionArea, Route, PollutionPoint
+from route_planner.serializers import RouteSerializer, PollutionAreaSerializer, PollutionPointSerializer
 from shapely.geometry import Point, LineString
 import geocoder
 from openrouteservice import client, directions
 from openrouteservice import convert
 from shapely.geometry import shape
 import yaml
+
 # Create your views here.
 ### DELETE BEFORE PUSHING ###
+APIKEY = ""
 
 
 class ListCreateAreas(generics.ListCreateAPIView):
     queryset = PollutionArea.objects.all()
     serializer_class = PollutionAreaSerializer
+
+
+class ListCreatePoints(generics.ListCreateAPIView):
+    queryset = PollutionPoint.objects.all()
+    serializer_class = PollutionPointSerializer
 
 
 class ListCreateRoute(generics.ListCreateAPIView):
@@ -36,4 +45,5 @@ class ListCreateRoute(generics.ListCreateAPIView):
         geometry = directions.directions(clnt, ((start_lon, start_lat), (end_lon, end_lat)))['routes'][0]['geometry']
         decoded = convert.decode_polyline(geometry)
         line = shape(decoded).wkt
+        geom = shapely.wkt.loads(line)
         serializer.save(start_geom=pnt_start, end_geom=pnt_end, geometry=line)

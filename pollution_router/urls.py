@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from route_planner.views import ListCreateAreas, ListCreateRoute
+from route_planner.views import ListCreateAreas, ListCreateRoute, ListCreatePoints
 urlpatterns = [
     path('admin/', admin.site.urls),
 url(r'^api/areas', ListCreateAreas.as_view(), name='list_areas'),
-url(r'^api/routes', ListCreateRoute.as_view(), name='list_areas')
+url(r'^api/routes', ListCreateRoute.as_view(), name='list_areas'),
+url(r'^api/points', ListCreatePoints.as_view(), name='list_areas')
 ]
